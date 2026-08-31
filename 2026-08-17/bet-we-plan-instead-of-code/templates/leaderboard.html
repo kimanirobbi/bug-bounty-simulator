@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="board-shell">
+  <section class="board-card" aria-labelledby="leaderboard-title">
+    <header><a href="/"><span>P</span> PATCHQUEST</a><p>LEVEL 01</p></header>
+    <div class="board-content">
+      <p class="eyebrow">HALL OF FAME</p>
+      <h1 id="leaderboard-title">Top defenders.</h1>
+      <p class="board-copy">Players who patched the hole before BruteForce Bot 3000 broke through.</p>
+      <ol class="scores">
+        {% for name, score in top %}
+        <li><span class="rank">{{ loop.index }}</span><span class="player">{{ name }}</span><strong>{{ score }}</strong></li>
+        {% else %}
+        <li class="empty">No scores yet. Be the first defender.</li>
+        {% endfor %}
+      </ol>
+      <a class="play-again" href="/">Play again <span>→</span></a>
+    </div>
+  </section>
+</main>
+<style>
+:root{--ink:#f4f1e8;--muted:#a7aca5;--line:rgba(244,241,232,.13);--acid:#ccff41}*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);background:#0b0d0b radial-gradient(circle at 80% 8%,#29331d 0,transparent 28rem);font-family:'Space Grotesk',sans-serif}.board-shell{display:grid;place-items:center;min-height:100vh;padding:24px}.board-card{width:min(100%,620px);overflow:hidden;border:1px solid var(--line);border-radius:26px;background:linear-gradient(135deg,#1b1f1b,#101210);box-shadow:0 25px 90px rgba(0,0,0,.38)}.board-card header{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--line)}.board-card header a{color:var(--ink);text-decoration:none;font-size:.78rem;letter-spacing:.12em;font-weight:700}.board-card header a span{display:inline-grid;place-items:center;width:21px;height:21px;margin-right:7px;border-radius:6px;color:#111;background:var(--acid);font-family:'DM Mono',monospace}.board-card header p{margin:0;color:var(--muted);font:500 .66rem 'DM Mono',monospace}.board-content{padding:42px 46px 46px}.eyebrow{margin:0 0 10px;color:var(--acid);font:500 .7rem 'DM Mono',monospace;letter-spacing:.13em}h1{margin:0;font-size:clamp(2.3rem,7vw,3.5rem);line-height:.94;letter-spacing:-.06em}.board-copy{margin:17px 0 25px;color:var(--muted);line-height:1.5;font-size:.86rem}.scores{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}.scores li{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:10px;padding:14px 5px;border-bottom:1px solid var(--line)}.rank{display:grid;place-items:center;width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.08);color:var(--muted);font:500 .68rem 'DM Mono',monospace}.scores li:nth-child(1) .rank{background:var(--acid);color:#111}.player{font-size:.9rem}.scores strong{color:var(--acid);font:500 .9rem 'DM Mono',monospace}.scores .empty{display:block;padding:26px 5px;color:var(--muted);font-size:.85rem}.play-again{display:block;margin-top:24px;padding:13px;border-radius:9px;background:var(--acid);color:#111;text-align:center;text-decoration:none;font-size:.82rem;font-weight:700}.play-again span{margin-left:5px;font-size:1rem}@media(max-width:520px){.board-shell{padding:12px}.board-content{padding:34px 24px}.board-card header{padding:18px}}
+</style>
+{% endblock %}

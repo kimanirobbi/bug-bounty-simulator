@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="round-shell">
+  <section class="round-card" aria-labelledby="round-title">
+    <header class="round-topbar">
+      <a class="round-brand" href="/"><span>P</span> PATCHQUEST</a>
+      <p>SCORE <b>{{ score }}</b></p>
+    </header>
+    <div class="round-content">
+      <p class="eyebrow">ROUND 02 · PATCH IT</p>
+      <h1 id="round-title">Stack your<br><span>defenses.</span></h1>
+      <p class="intro">The bot found a way in. Activate every protection layer to cut off its attack.</p>
+
+      <section class="hp-section" aria-label="BruteForce Bot health">
+        <div class="hp-label"><span>BRUTEFORCE BOT HP</span><strong id="hp-text">{{ hp }}% · ATTACKING</strong></div>
+        <div class="hp-track"><div id="hp-bar" style="width: {{ hp }}%"></div></div>
+      </section>
+
+      <p class="instruction">Click all three defenses to block him.</p>
+      <div class="patches">
+        <button class="patch" type="button" data-patch="meter">
+          <span class="patch-icon">🛡️</span><strong>Strong meter</strong><small>Spot weak passwords</small><em id="check-meter">✓ ACTIVE</em>
+        </button>
+        <button class="patch" type="button" data-patch="2fa">
+          <span class="patch-icon">📱</span><strong>2FA</strong><small>Verify every login</small><em id="check-2fa">✓ ACTIVE</em>
+        </button>
+        <button class="patch" type="button" data-patch="lock">
+          <span class="patch-icon">🔒</span><strong>Lockout</strong><small>Stop repeat attempts</small><em id="check-lock">✓ ACTIVE</em>
+        </button>
+      </div>
+      <a href="/round3" class="next-button" id="next-btn" hidden>Boss weakened — Go to final <span>→</span></a>
+    </div>
+  </section>
+</main>
+
+<style>
+  :root{--ink:#f4f1e8;--muted:#a7aca5;--line:rgba(244,241,232,.13);--acid:#ccff41;--red:#ff5b5b}*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);background:#0b0d0b radial-gradient(circle at 80% 8%,#29331d 0,transparent 28rem);font-family:'Space Grotesk',sans-serif}.round-shell{display:grid;place-items:center;min-height:100vh;padding:24px}.round-card{width:min(100%,640px);overflow:hidden;border:1px solid var(--line);border-radius:26px;background:linear-gradient(135deg,#1b1f1b,#101210);box-shadow:0 25px 90px rgba(0,0,0,.38)}.round-topbar{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;border-bottom:1px solid var(--line)}.round-brand{color:var(--ink);text-decoration:none;font-size:.78rem;letter-spacing:.12em;font-weight:700}.round-brand span{display:inline-grid;place-items:center;width:21px;height:21px;margin-right:7px;border-radius:6px;color:#111;background:var(--acid);font-family:'DM Mono',monospace}.round-topbar p{margin:0;color:var(--muted);font:500 .7rem 'DM Mono',monospace}.round-topbar b{margin-left:6px;color:var(--acid)}.round-content{padding:44px 48px 48px}.eyebrow{margin:0 0 10px;color:var(--acid);font:500 .7rem 'DM Mono',monospace;letter-spacing:.13em}h1{margin:0;font-size:clamp(2.3rem,7vw,3.7rem);line-height:.94;letter-spacing:-.06em}h1 span{color:var(--acid)}.intro{max-width:470px;margin:20px 0;color:var(--muted);line-height:1.5}.hp-section{margin:28px 0 23px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#111411}.hp-label{display:flex;justify-content:space-between;gap:15px;margin-bottom:10px;font:500 .68rem 'DM Mono',monospace}.hp-label span{color:var(--muted)}.hp-label strong{color:var(--red)}.hp-track{height:10px;overflow:hidden;border-radius:10px;background:#333632}.hp-track div{height:100%;border-radius:inherit;background:var(--red);box-shadow:0 0 14px rgba(255,91,91,.42);transition:width .7s ease,background .35s ease}.instruction{margin:0 0 13px;color:var(--muted);font-size:.82rem}.patches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.patch{min-height:156px;padding:14px 9px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025);color:var(--ink);cursor:pointer;text-align:center;transition:.18s ease}.patch:hover,.patch:focus-visible{border-color:var(--acid);background:rgba(204,255,65,.07);transform:translateY(-2px);outline:none}.patch-icon,.patch strong,.patch small,.patch em{display:block}.patch-icon{margin-bottom:11px;font-size:1.7rem}.patch strong{font-size:.8rem}.patch small{margin-top:5px;color:var(--muted);font-size:.65rem;line-height:1.2}.patch em{visibility:hidden;margin-top:10px;color:var(--acid);font:500 .61rem 'DM Mono',monospace;font-style:normal}.patch.active{border-color:rgba(204,255,65,.6);background:rgba(204,255,65,.09);cursor:default}.patch.active em{visibility:visible}.next-button{display:block;width:100%;margin-top:22px;padding:14px;border-radius:9px;background:var(--acid);color:#111;text-align:center;text-decoration:none;font-size:.86rem;font-weight:700}.next-button span{margin-left:5px;font-size:1.1rem}[hidden]{display:none!important}@media(max-width:520px){.round-shell{padding:12px}.round-content{padding:34px 24px}.round-topbar{padding:18px}.patches{gap:7px}.patch{min-height:142px;padding:12px 5px}.patch strong{font-size:.72rem}.patch small{font-size:.59rem}}
+</style>
+<script>
+  const patched = { meter: false, '2fa': false, lock: false };
+  let hp = {{ hp }};
+  const hpBar = document.getElementById('hp-bar');
+  const hpText = document.getElementById('hp-text');
+  document.querySelectorAll('.patch').forEach((button) => {
+    button.addEventListener('click', () => {
+      const type = button.dataset.patch;
+      if (patched[type]) return;
+      patched[type] = true;
+      button.classList.add('active');
+      hp -= 23;
+      hpBar.style.width = hp + '%';
+      hpText.textContent = hp + '% · ' + (hp < 40 ? 'STUNNED' : 'SLOWING DOWN');
+      if (hp < 40) {
+        hpBar.style.background = 'var(--acid)';
+        hpBar.style.boxShadow = '0 0 14px rgba(204,255,65,.42)';
+        hpText.style.color = 'var(--acid)';
+        document.getElementById('next-btn').hidden = false;
+      }
+    });
+  });
+</script>
+{% endblock %}

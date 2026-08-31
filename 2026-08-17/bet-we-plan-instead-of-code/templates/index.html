@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="game-shell">
+  <section class="hero-card" aria-labelledby="game-title">
+    <div class="topbar">
+      <a class="brand" href="/" aria-label="PatchQuest home"><span class="brand-mark">P</span> PATCHQUEST</a>
+      <span class="bit-label">BIT 01 <i></i> ACTIVE</span>
+    </div>
+
+    <div class="mission" id="mission">
+      <div class="mission-copy">
+        <p class="eyebrow">SECURITY INCIDENT #001</p>
+        <h1 id="game-title">Weak password<br><span>boss fight.</span></h1>
+        <p class="lede">BruteForce Bot 3000 found the login to your CV site. Patch the vulnerability before it guesses its way in.</p>
+        <div class="risk-row"><span class="risk-dot"></span><span>Threat level:</span><strong>CRITICAL</strong></div>
+      </div>
+      <div class="boss-panel" aria-label="BruteForce Bot 3000">
+        <div class="bot-face"><span class="bot-eye left"></span><span class="bot-eye right"></span><span class="bot-mouth"></span></div>
+        <p>BRUTEFORCE<br>BOT <b>3000</b></p>
+        <div class="attack-bars"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+
+    <div class="terminal" aria-live="polite">
+      <div class="terminal-head"><span class="terminal-lights"><i></i><i></i><i></i></span><span>security_scan.log</span></div>
+      <div class="terminal-body" id="terminalText"><span class="prompt">$</span> scanning credentials... <span class="scan-result">vulnerability detected</span></div>
+    </div>
+
+    <section class="password-card" id="passwordCard" aria-labelledby="password-title">
+      <div class="card-heading"><p class="eyebrow">EXPOSED CREDENTIAL</p><span class="status-pill">UNSAFE</span></div>
+      <h2 id="password-title">Your current password</h2>
+      <div class="password-value"><code>admin123</code><span>8 chars · common pattern</span></div>
+      <div class="meter"><span></span></div>
+      <p class="meter-label">Strength: <b>very weak</b></p>
+    </section>
+
+    <section class="defense" id="defense" aria-labelledby="defense-title">
+      <div class="defense-title"><p class="eyebrow">CHOOSE YOUR PATCH</p><h2 id="defense-title">How will you defend?</h2></div>
+      <div class="choices">
+        <button class="choice" data-choice="password"><span class="choice-icon">✦</span><strong>Use a strong password</strong><small>Long, unique &amp; unpredictable</small></button>
+        <button class="choice" data-choice="mfa"><span class="choice-icon">⌁</span><strong>Enable 2-factor auth</strong><small>Add a second layer of proof</small></button>
+      </div>
+      <p class="hint">Pick the best first move. You can add more protection afterwards.</p>
+      <a class="round-link" href="/round1">Start Defending →</a>
+    </section>
+
+    <section class="result" id="result" hidden aria-live="polite">
+      <div class="result-icon">✓</div>
+      <p class="eyebrow">PATCH DEPLOYED</p>
+      <h2>Attack blocked.</h2>
+      <p id="resultMessage"></p>
+      <div class="xp"><span>+100 XP</span><span>Security basics learned</span></div>
+      <button class="again" id="restart">Run simulation again</button>
+    </section>
+  </section>
+</main>
+
+<style>
+  :root { color-scheme: dark; --ink:#f4f1e8; --muted:#a7aca5; --line:rgba(244,241,232,.13); --acid:#ccff41; --red:#ff5b5b; --panel:#151716; }
+  * { box-sizing:border-box; } body { margin:0; min-height:100vh; color:var(--ink); background:#0b0d0b radial-gradient(circle at 78% 9%,#29331d 0,transparent 28rem); font-family:'Space Grotesk',sans-serif; }
+  .game-shell { width:min(100%,1100px); margin:auto; padding:24px; } .hero-card { overflow:hidden; border:1px solid var(--line); border-radius:28px; background:linear-gradient(135deg,rgba(29,33,29,.98),rgba(12,14,12,.99)); box-shadow:0 24px 80px rgba(0,0,0,.35); }
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:22px 30px; border-bottom:1px solid var(--line); } .brand { color:var(--ink); text-decoration:none; font-size:.82rem; letter-spacing:.12em; font-weight:700; } .brand-mark { display:inline-grid; place-items:center; width:22px; height:22px; margin-right:8px; border-radius:6px; color:#111; background:var(--acid); font-family:'DM Mono',monospace; } .bit-label { color:var(--acid); font:500 .68rem 'DM Mono',monospace; letter-spacing:.09em; } .bit-label i { display:inline-block; width:6px; height:6px; margin:0 7px; background:var(--acid); border-radius:50%; box-shadow:0 0 12px var(--acid); }
+  .mission { display:grid; grid-template-columns:1.3fr .7fr; min-height:302px; padding:52px 64px 38px; gap:32px; background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:32px 32px; } .eyebrow { margin:0 0 10px; color:var(--acid); font:500 .72rem 'DM Mono',monospace; letter-spacing:.12em; } h1 { margin:0; max-width:550px; font-size:clamp(2.4rem,5vw,4.7rem); line-height:.94; letter-spacing:-.06em; } h1 span { color:var(--acid); } .lede { max-width:490px; margin:22px 0; color:var(--muted); font-size:1rem; line-height:1.55; } .risk-row { display:flex; align-items:center; gap:8px; font:500 .72rem 'DM Mono',monospace; color:var(--muted); } .risk-row strong { color:var(--red); } .risk-dot { width:8px; height:8px; background:var(--red); border-radius:50%; box-shadow:0 0 11px var(--red); }
+  .boss-panel { align-self:center; justify-self:end; text-align:center; color:#b3baae; font:500 .72rem 'DM Mono',monospace; letter-spacing:.08em; } .boss-panel b { color:var(--red); } .bot-face { position:relative; width:126px; height:104px; margin:auto auto 16px; border:2px solid #aeb7a5; border-radius:28px 28px 18px 18px; background:#20251e; box-shadow:inset 0 0 30px rgba(204,255,65,.08),0 0 38px rgba(204,255,65,.08); } .bot-face:before { position:absolute; content:''; top:-22px; left:60px; width:2px; height:20px; background:#aeb7a5; } .bot-face:after { position:absolute; content:''; top:-29px; left:56px; width:10px; height:10px; border-radius:50%; background:var(--acid); box-shadow:0 0 12px var(--acid); } .bot-eye { position:absolute; top:35px; width:16px; height:10px; border-radius:8px; background:var(--red); box-shadow:0 0 10px var(--red); } .bot-eye.left { left:27px; }.bot-eye.right { right:27px; }.bot-mouth { position:absolute; left:38px; bottom:20px; width:47px; height:12px; border-bottom:2px solid var(--acid); }.attack-bars { display:flex; justify-content:center; gap:4px; margin-top:10px; }.attack-bars i { width:17px; height:4px; background:var(--red); opacity:.25; }.attack-bars i:nth-child(-n+4) { opacity:1; }
+  .terminal { margin:0 32px; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:#0a0b0a; font:400 .76rem 'DM Mono',monospace; } .terminal-head { display:flex; gap:10px; padding:10px 13px; color:#8d928b; background:#171a17; }.terminal-lights i { display:inline-block; width:7px; height:7px; margin-right:4px; border-radius:50%; background:#4e544e; }.terminal-lights i:first-child {background:var(--red);}.terminal-body { padding:15px; color:#c6ccc2; }.prompt { color:var(--acid); }.scan-result { color:var(--red); }
+  .password-card,.defense,.result { margin:26px 32px 0; padding:24px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.025); }.card-heading { display:flex; justify-content:space-between; align-items:flex-start; }.status-pill { padding:5px 8px; border:1px solid rgba(255,91,91,.3); border-radius:5px; color:var(--red); background:rgba(255,91,91,.08); font:500 .62rem 'DM Mono',monospace; }.password-card h2,.defense h2,.result h2 { margin:0; font-size:1.35rem; letter-spacing:-.035em; }.password-value { display:flex; align-items:baseline; gap:13px; margin:17px 0 12px; }.password-value code { color:var(--red); font:500 1.35rem 'DM Mono',monospace; }.password-value span,.meter-label,.hint { color:var(--muted); font-size:.78rem; }.meter { height:5px; overflow:hidden; border-radius:5px; background:#343734; }.meter span { display:block; width:15%; height:100%; background:var(--red); }.meter-label { margin:8px 0 0; }.meter-label b { color:var(--red); text-transform:uppercase; font:500 .68rem 'DM Mono',monospace; }
+  .defense { margin-bottom:32px; }.choices { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:18px; }.choice { appearance:none; width:100%; padding:20px; border:1px solid var(--line); border-radius:12px; color:var(--ink); background:#1a1e1a; text-align:left; cursor:pointer; transition:.18s ease; }.choice:hover,.choice:focus-visible { transform:translateY(-2px); border-color:var(--acid); outline:none; background:#20261b; }.choice-icon { display:block; margin-bottom:14px; color:var(--acid); font-size:1.35rem; }.choice strong,.choice small { display:block; }.choice strong { font-size:.92rem; }.choice small { margin-top:4px; color:var(--muted); font-size:.75rem; }.hint { margin:14px 0 0; }
+  .round-link { display:inline-block; margin-top:16px; padding:11px 15px; border-radius:8px; background:var(--acid); color:#111; text-decoration:none; font-size:.78rem; font-weight:700; }
+  .result { text-align:center; margin-bottom:32px; padding:34px; background:linear-gradient(135deg,rgba(204,255,65,.1),rgba(255,255,255,.02)); }.result-icon { display:grid; place-items:center; width:48px; height:48px; margin:0 auto 14px; border-radius:50%; background:var(--acid); color:#111; font-size:1.6rem; font-weight:bold; }.result h2 { font-size:2rem; }.result p:not(.eyebrow) { max-width:500px; margin:12px auto; color:var(--muted); line-height:1.5; }.xp { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin:20px 0; font:500 .68rem 'DM Mono',monospace; color:var(--acid); }.xp span+span { color:var(--muted); }.again { border:0; border-radius:8px; padding:11px 15px; background:var(--acid); color:#111; cursor:pointer; font:700 .78rem 'Space Grotesk',sans-serif; }
+  [hidden] { display:none !important; } @media (max-width:650px) { .game-shell{padding:12px}.topbar{padding:18px}.mission{grid-template-columns:1fr;padding:36px 26px 28px}.boss-panel{display:none}.terminal,.password-card,.defense,.result{margin-left:18px;margin-right:18px}.choices{grid-template-columns:1fr}.password-value{align-items:flex-start;flex-direction:column;gap:5px} }
+</style>
+<script>
+  const options = document.querySelectorAll('.choice');
+  const terminal = document.getElementById('terminalText');
+  const card = document.getElementById('passwordCard');
+  const defense = document.getElementById('defense');
+  const result = document.getElementById('result');
+  const message = document.getElementById('resultMessage');
+  function defend(type) {
+    const first = type === 'password';
+    terminal.innerHTML = `<span class="prompt">$</span> deploying ${first ? 'credential hardening' : 'multi-factor authentication'}... <span style="color:var(--acid)">patch applied</span>`;
+    message.textContent = first ? 'A long, unique password takes the bot’s guesses out of play. Add two-factor authentication next for even stronger account security.' : 'Two-factor authentication stops the bot even if it gets the password. A strong, unique password is still essential.';
+    card.hidden = true; defense.hidden = true; result.hidden = false;
+    result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  options.forEach(option => option.addEventListener('click', () => defend(option.dataset.choice)));
+  document.getElementById('restart').addEventListener('click', () => { card.hidden = false; defense.hidden = false; result.hidden = true; terminal.innerHTML = '<span class="prompt">$</span> scanning credentials... <span class="scan-result">vulnerability detected</span>'; defense.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+</script>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="round-shell">
+  <section class="round-card" aria-labelledby="round-title">
+    <header class="round-topbar">
+      <a class="round-brand" href="/"><span>P</span> PATCHQUEST</a>
+      <p>SCORE <b>{{ score }}</b></p>
+    </header>
+
+    {% if result == 'correct' %}
+    <section class="feedback success" aria-live="polite">
+      <div class="feedback-mark">✓</div>
+      <p class="eyebrow">VULNERABILITY FOUND</p>
+      <h1>Correct!</h1>
+      <p><code>{{ picked }}</code> was cracked in <b>0.2 seconds</b>. That credential is easy for an attacker to guess.</p>
+      <div class="score-add">+50 XP &nbsp; · &nbsp; SCORE {{ score }}</div>
+      <a class="primary-action" href="/round2">Boss found — Patch it →</a>
+      <span class="next-note">Next: Round 2 · Patch it</span>
+    </section>
+    {% elif result == 'wrong' %}
+    <section class="feedback failure" aria-live="polite">
+      <div class="feedback-mark">!</div>
+      <p class="eyebrow">NOT THE WEAKEST PICK</p>
+      <h1>Try again.</h1>
+      <p><code>{{ picked }}</code> is stronger than the obvious passwords in this list. Look for a common password or number sequence.</p>
+      <a class="primary-action" href="/round1">← Back to choices</a>
+    </section>
+    {% else %}
+    <section class="round-content">
+      <p class="eyebrow">ROUND 01 · FIND THE HOLE</p>
+      <h1 id="round-title">Which password<br><span>dies first?</span></h1>
+      <p class="intro">BruteForce Bot tries 1,000,000 passwords every second. Choose a credential it can crack almost instantly.</p>
+      <div class="bot-warning"><span>!</span><p>Attack in progress <b>01:00</b></p></div>
+      <form action="/check-round1" method="POST">
+        <fieldset>
+          <legend>Choose one password</legend>
+          {% for pwd in passwords %}
+          <label class="password-option">
+            <input type="radio" name="password" value="{{ pwd }}" required>
+            <span class="radio-ui"></span>
+            <code>{{ pwd }}</code>
+          </label>
+          {% endfor %}
+        </fieldset>
+        <button class="check-button" type="submit">Check which gets hacked <span>→</span></button>
+      </form>
+    </section>
+    {% endif %}
+  </section>
+</main>
+
+<style>
+  :root { --ink:#f4f1e8; --muted:#a7aca5; --line:rgba(244,241,232,.13); --acid:#ccff41; --red:#ff5b5b; }
+  *{box-sizing:border-box} body{margin:0;min-height:100vh;color:var(--ink);background:#0b0d0b radial-gradient(circle at 80% 8%,#29331d 0,transparent 28rem);font-family:'Space Grotesk',sans-serif}.round-shell{display:grid;place-items:center;min-height:100vh;padding:24px}.round-card{width:min(100%,640px);overflow:hidden;border:1px solid var(--line);border-radius:26px;background:linear-gradient(135deg,#1b1f1b,#101210);box-shadow:0 25px 90px rgba(0,0,0,.38)}.round-topbar{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;border-bottom:1px solid var(--line)}.round-brand{color:var(--ink);text-decoration:none;font-size:.78rem;letter-spacing:.12em;font-weight:700}.round-brand span{display:inline-grid;place-items:center;width:21px;height:21px;margin-right:7px;border-radius:6px;color:#111;background:var(--acid);font-family:'DM Mono',monospace}.round-topbar p{margin:0;color:var(--muted);font:500 .7rem 'DM Mono',monospace}.round-topbar b{margin-left:6px;color:var(--acid)}.round-content,.feedback{padding:44px 48px 48px}.eyebrow{margin:0 0 10px;color:var(--acid);font:500 .7rem 'DM Mono',monospace;letter-spacing:.13em}h1{margin:0;font-size:clamp(2.3rem,7vw,3.7rem);line-height:.94;letter-spacing:-.06em}h1 span{color:var(--acid)}.intro{max-width:470px;margin:20px 0;color:var(--muted);line-height:1.5}.bot-warning{display:flex;gap:10px;align-items:center;margin:24px 0;padding:11px 12px;border:1px solid rgba(255,91,91,.22);border-radius:9px;background:rgba(255,91,91,.06)}.bot-warning span{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--red);color:#1b1010;font-weight:bold}.bot-warning p{margin:0;color:#d7d8d2;font:400 .7rem 'DM Mono',monospace}.bot-warning b{margin-left:7px;color:var(--red)}fieldset{margin:0;padding:0;border:0}legend{margin-bottom:11px;color:var(--muted);font-size:.76rem}.password-option{display:flex;align-items:center;gap:13px;margin:9px 0;padding:16px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);cursor:pointer;transition:.15s ease}.password-option:hover{border-color:var(--acid);background:rgba(204,255,65,.06)}.password-option input{position:absolute;opacity:0}.radio-ui{width:16px;height:16px;border:1px solid #81877e;border-radius:50%}.password-option input:checked + .radio-ui{border:5px solid var(--acid);box-shadow:0 0 0 2px rgba(204,255,65,.18)}.password-option code{font:500 .95rem 'DM Mono',monospace}.check-button,.primary-action{display:block;width:100%;margin-top:20px;padding:14px;border:0;border-radius:9px;background:var(--acid);color:#111;cursor:pointer;text-align:center;text-decoration:none;font:700 .86rem 'Space Grotesk',sans-serif}.check-button span{margin-left:6px;font-size:1.1rem}.feedback{text-align:center}.feedback-mark{display:grid;place-items:center;width:48px;height:48px;margin:0 auto 15px;border-radius:50%;background:var(--acid);color:#111;font-size:1.5rem;font-weight:bold}.feedback h1{font-size:2.5rem}.feedback>p:not(.eyebrow){margin:15px auto;color:var(--muted);line-height:1.55}.feedback code{color:var(--ink);font-family:'DM Mono',monospace}.score-add{margin:22px 0;color:var(--acid);font:500 .72rem 'DM Mono',monospace}.next-note{display:block;margin-top:14px;color:var(--muted);font-size:.74rem}.failure .feedback-mark{background:var(--red)}.failure .eyebrow{color:var(--red)}.failure .primary-action{background:#e9ece6}.success .primary-action{margin-bottom:0}@media(max-width:520px){.round-shell{padding:12px}.round-content,.feedback{padding:34px 24px}.round-topbar{padding:18px}.password-option{padding:14px}}
+</style>
+{% endblock %}
