@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="slain-shell">
+  <section class="slain-card" aria-labelledby="slain-title">
+    <div class="skull">💀🐍</div>
+    <p class="eyebrow">LEVEL 02 COMPLETE</p>
+    <h1 id="slain-title">Snake slain.</h1>
+    <p class="subtitle">The database is sealed. Your parameterized query stopped the payload from becoming executable SQL.</p>
+    <section class="secure-code" aria-label="Secure query example"><p>// SECURE CODE</p><code>cursor.execute(<br>&nbsp; "SELECT * FROM users WHERE name = ?",<br>&nbsp; (user_input,)<br>)</code><span>// The ? keeps input as data, not code.</span></section>
+    <section class="lesson"><span>WHAT YOU LEARNED</span><p>Never concatenate untrusted input into an SQL statement. Use prepared statements or parameterized queries.</p></section>
+    <div class="actions"><a href="/">Home</a><a href="/level2">Replay Level 2</a></div>
+    <p class="next">NEXT THREAT · XSS GHOST · COMING SOON</p>
+  </section>
+</main>
+<style>
+:root{--ink:#f4f1e8;--muted:#a7aca5;--line:rgba(244,241,232,.13);--green:#5ef09b}*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);background:#09110c radial-gradient(circle at 50% 15%,#164024 0,transparent 30rem);font-family:'Space Grotesk',sans-serif}.slain-shell{display:grid;place-items:center;min-height:100vh;padding:24px}.slain-card{width:min(100%,590px);padding:46px 48px;text-align:center;border:1px solid rgba(94,240,155,.32);border-radius:28px;background:linear-gradient(145deg,#17321f,#0d120e);box-shadow:0 25px 90px rgba(0,0,0,.42)}.skull{margin-bottom:14px;font-size:3.5rem;filter:drop-shadow(0 0 18px rgba(94,240,155,.28))}.eyebrow{margin:0 0 10px;color:var(--green);font:500 .7rem 'DM Mono',monospace;letter-spacing:.13em}h1{margin:0;font-size:clamp(2.5rem,7vw,3.8rem);letter-spacing:-.065em}.subtitle{max-width:410px;margin:16px auto 25px;color:var(--muted);line-height:1.5}.secure-code{padding:18px;text-align:left;border:1px solid var(--line);border-radius:12px;background:#090d0a}.secure-code p,.secure-code span{display:block;font:500 .65rem 'DM Mono',monospace}.secure-code p{margin:0 0 9px;color:var(--green)}.secure-code code{color:#dcdfd9;font:400 .76rem 'DM Mono',monospace;line-height:1.55}.secure-code span{margin-top:12px;color:#879088}.lesson{margin:20px 0;padding:15px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.035);text-align:left}.lesson span{color:var(--green);font:500 .62rem 'DM Mono',monospace;letter-spacing:.1em}.lesson p{margin:8px 0 0;color:var(--muted);font-size:.76rem;line-height:1.5}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions a{padding:13px 8px;border:1px solid var(--line);border-radius:9px;color:var(--ink);text-decoration:none;font-size:.8rem}.actions a:first-child{background:var(--green);border-color:var(--green);color:#07140b;font-weight:700}.next{margin:20px 0 0;color:#7b867d;font:500 .61rem 'DM Mono',monospace;letter-spacing:.08em}@media(max-width:520px){.slain-shell{padding:12px}.slain-card{padding:36px 24px}}
+</style>
+{% endblock %}

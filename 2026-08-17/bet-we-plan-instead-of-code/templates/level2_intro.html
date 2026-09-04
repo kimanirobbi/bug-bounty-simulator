@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="intro-shell">
+  <section class="intro-card" aria-labelledby="level-title">
+    <header><a href="/"><span>P</span> PATCHQUEST</a><p>SCORE <b>{{ score }}</b></p></header>
+    <div class="intro-content">
+      <div class="snake">🐍</div>
+      <p class="eyebrow">LEVEL 02 UNLOCKED</p>
+      <h1 id="level-title">SQL Injection<br><span>Snake.</span></h1>
+      <p class="threat">DATABASE THREAT DETECTED</p>
+      <p class="copy">A developer placed user input directly into a login query. The snake is looking for a way to turn that input into database code.</p>
+      <div class="payload"><span>VULNERABLE LOGIN CODE</span><code>SELECT * FROM users<br>WHERE name = '[input]'</code></div>
+      <div class="stats"><div><span>BOSS HP</span><b>200</b></div><div><span>WEAKNESS</span><b>PARAMETERIZED QUERIES</b></div></div>
+      <a href="/level2/round1" class="enter">Enter the lair <span>→</span></a>
+      <p class="note">Learn how login inputs become code—and how to stop them.</p>
+    </div>
+  </section>
+</main>
+<style>
+:root{--ink:#f4f1e8;--muted:#a7aca5;--line:rgba(244,241,232,.13);--red:#ff5b5b;--amber:#ffb24a}*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);background:#10090a radial-gradient(circle at 78% 10%,#482018 0,transparent 30rem);font-family:'Space Grotesk',sans-serif}.intro-shell{display:grid;place-items:center;min-height:100vh;padding:24px}.intro-card{width:min(100%,610px);overflow:hidden;border:1px solid rgba(255,91,91,.32);border-radius:27px;background:linear-gradient(135deg,#251312,#100c0c);box-shadow:0 26px 90px rgba(0,0,0,.45)}.intro-card header{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--line)}.intro-card header a{color:var(--ink);text-decoration:none;font-size:.78rem;letter-spacing:.12em;font-weight:700}.intro-card header a span{display:inline-grid;place-items:center;width:21px;height:21px;margin-right:7px;border-radius:6px;color:#21100f;background:var(--red);font-family:'DM Mono',monospace}.intro-card header p{margin:0;color:var(--muted);font:500 .7rem 'DM Mono',monospace}.intro-card header b{margin-left:6px;color:var(--amber)}.intro-content{padding:41px 48px 44px;text-align:center}.snake{margin-bottom:12px;font-size:4rem;filter:drop-shadow(0 0 18px rgba(255,91,91,.35))}.eyebrow{margin:0 0 10px;color:var(--red);font:500 .7rem 'DM Mono',monospace;letter-spacing:.14em}h1{margin:0;font-size:clamp(2.6rem,8vw,4.1rem);line-height:.9;letter-spacing:-.065em}h1 span{color:var(--red)}.threat{display:inline-block;margin:19px 0 0;padding:6px 8px;border:1px solid rgba(255,91,91,.28);border-radius:5px;background:rgba(255,91,91,.09);color:var(--red);font:500 .61rem 'DM Mono',monospace;letter-spacing:.1em}.copy{max-width:455px;margin:21px auto;color:var(--muted);line-height:1.55}.copy strong{color:var(--ink)}.payload{margin:22px 0;padding:16px;border:1px solid var(--line);border-radius:10px;background:#0c0909;text-align:left}.payload span{display:block;margin-bottom:8px;color:var(--muted);font:500 .61rem 'DM Mono',monospace;letter-spacing:.1em}.payload code{color:#ff9b8f;font:500 1.05rem 'DM Mono',monospace}.stats{display:grid;grid-template-columns:1fr 1.6fr;margin:18px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden;text-align:left}.stats div{padding:12px 15px;background:rgba(255,255,255,.025)}.stats div+div{border-left:1px solid var(--line)}.stats span,.stats b{display:block;font:500 .62rem 'DM Mono',monospace}.stats span{color:var(--muted);margin-bottom:4px}.stats b{color:var(--amber);font-size:.7rem}.enter{display:block;margin-top:23px;padding:14px;border-radius:9px;background:var(--red);color:#220c0c;text-decoration:none;font-size:.86rem;font-weight:700}.enter span{margin-left:5px}.note{margin:16px 0 0;color:#77706d;font-size:.7rem}@media(max-width:520px){.intro-shell{padding:12px}.intro-content{padding:34px 24px}.intro-card header{padding:18px}.stats{grid-template-columns:1fr}.stats div+div{border-left:0;border-top:1px solid var(--line)}}
+</style>
+{% endblock %}

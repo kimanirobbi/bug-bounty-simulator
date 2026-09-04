@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="patch-shell">
+  <section class="patch-card" aria-labelledby="round-title">
+    <header><a href="/level2"><span>🐍</span> SQLI SNAKE</a><p>SCORE <b>{{ score }}</b></p></header>
+    <div class="patch-content">
+      <p class="eyebrow">ROUND 02 · PATCH IT</p>
+      <h1 id="round-title">Turn input<br><span>into data.</span></h1>
+      <p class="intro">You found the injection. Now choose the defense that keeps user input out of the SQL command itself.</p>
+      <div class="before"><span>BEFORE · VULNERABLE</span><code>query = "SELECT * FROM users<br>WHERE name = '" + input + "'"</code></div>
+      {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+      <form action="/check-level2-round2" method="POST">
+        <fieldset>
+          <legend>Choose a patch</legend>
+          <label class="patch-option"><input type="radio" name="patch" value="sanitize input" required><span class="radio-ui"></span><span><strong>Remove quote characters</strong><small>Try to filter risky input</small></span></label>
+          <label class="patch-option good"><input type="radio" name="patch" value="query = 'SELECT * FROM users WHERE name = ?', (input,)"><span class="radio-ui"></span><span><strong>Use a parameterized query (?)</strong><small>Send input separately from SQL code</small></span></label>
+          <label class="patch-option"><input type="radio" name="patch" value="hide error messages"><span class="radio-ui"></span><span><strong>Hide SQL errors</strong><small>Reduce detail shown to the user</small></span></label>
+        </fieldset>
+        <button type="submit">Patch database <span>🛡️</span></button>
+      </form>
+    </div>
+  </section>
+</main>
+<style>
+:root{--ink:#f4f1e8;--muted:#a7aca5;--line:rgba(244,241,232,.13);--green:#5ef09b;--red:#ff5b5b}*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);background:#09110c radial-gradient(circle at 78% 10%,#164024 0,transparent 30rem);font-family:'Space Grotesk',sans-serif}.patch-shell{display:grid;place-items:center;min-height:100vh;padding:24px}.patch-card{width:min(100%,640px);overflow:hidden;border:1px solid rgba(94,240,155,.3);border-radius:27px;background:linear-gradient(135deg,#112419,#0c100d);box-shadow:0 26px 90px rgba(0,0,0,.45)}.patch-card header{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--line)}.patch-card header a{color:var(--ink);text-decoration:none;font-size:.76rem;letter-spacing:.11em;font-weight:700}.patch-card header a span{margin-right:6px}.patch-card header p{margin:0;color:var(--muted);font:500 .7rem 'DM Mono',monospace}.patch-card header b{margin-left:6px;color:var(--green)}.patch-content{padding:42px 48px 45px}.eyebrow{margin:0 0 10px;color:var(--green);font:500 .7rem 'DM Mono',monospace;letter-spacing:.13em}h1{margin:0;font-size:clamp(2.4rem,7vw,3.7rem);line-height:.93;letter-spacing:-.06em}h1 span{color:var(--green)}.intro{margin:20px 0;color:var(--muted);line-height:1.5}.before{margin:22px 0;padding:15px;border:1px solid rgba(255,91,91,.22);border-radius:10px;background:#110e0e}.before span{display:block;margin-bottom:8px;color:#ff9990;font:500 .61rem 'DM Mono',monospace;letter-spacing:.1em}.before code{color:#ddd7d3;font:400 .75rem 'DM Mono',monospace;line-height:1.6}.error{margin:0 0 15px;padding:11px;border:1px solid rgba(255,91,91,.3);border-radius:8px;background:rgba(255,91,91,.09);color:#ffafa7;font-size:.76rem;line-height:1.4}fieldset{margin:0;padding:0;border:0}legend{margin-bottom:10px;color:var(--muted);font-size:.76rem}.patch-option{display:flex;align-items:flex-start;gap:13px;margin:9px 0;padding:14px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);cursor:pointer;transition:.15s ease}.patch-option:hover{border-color:var(--green);background:rgba(94,240,155,.06)}.patch-option.good{border-color:rgba(94,240,155,.32)}.patch-option input{position:absolute;opacity:0}.radio-ui{flex:0 0 16px;width:16px;height:16px;margin-top:2px;border:1px solid #839287;border-radius:50%}.patch-option input:checked+.radio-ui{border:5px solid var(--green);box-shadow:0 0 0 2px rgba(94,240,155,.18)}.patch-option strong,.patch-option small{display:block}.patch-option strong{font-size:.84rem}.patch-option small{margin-top:4px;color:var(--muted);font-size:.7rem}button{width:100%;margin-top:19px;padding:14px;border:0;border-radius:9px;background:var(--green);color:#07140b;cursor:pointer;font:700 .86rem 'Space Grotesk',sans-serif}button span{margin-left:5px}@media(max-width:520px){.patch-shell{padding:12px}.patch-content{padding:34px 24px}.patch-card header{padding:18px}}
+</style>
+{% endblock %}

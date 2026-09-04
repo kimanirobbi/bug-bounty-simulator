@@ -36,13 +36,7 @@ def check_round1():
 
     if pick in weak_passwords:
         session['score'] = session.get('score', 0) + 50
-        return render_template(
-            'round1.html',
-            passwords=["admin123", "P@ssw0rd!2026", "mycvsite", "12345678"],
-            score=session['score'],
-            result='correct',
-            picked=pick,
-        )
+        return redirect('/round2')
 
     return render_template(
         'round1.html',
@@ -97,6 +91,65 @@ def leaderboard():
         ).fetchall()
 
     return render_template('leaderboard.html', top=top)
+
+
+# ===== LEVEL 2: SQL INJECTION SNAKE =====
+@app.route('/level2')
+def level2_intro():
+    session.pop('level2_r1', None)
+    session.pop('level2_r2', None)
+    return render_template('level2_intro.html', score=session.get('score', 0))
+
+
+@app.route('/level2/round1')
+def level2_round1():
+    return render_template('level2_round1.html', score=session.get('score', 0))
+
+
+@app.route('/check-level2-round1', methods=['POST'])
+def check_level2_round1():
+    choice = request.form.get('query', '')
+
+    if "' OR '1'='1" in choice or '" OR "1"="1' in choice:
+        session['level2_r1'] = True
+        session['score'] = session.get('score', 0) + 150
+        return redirect('/level2/round2')
+
+    return render_template(
+        'level2_round1.html',
+        score=session.get('score', 0),
+        error="Snake slipped away! That query didn't inject. Look for OR '1'='1.",
+    )
+
+
+@app.route('/level2/round2')
+def level2_round2():
+    if not session.get('level2_r1'):
+        return redirect('/level2/round1')
+    return render_template('level2_round2.html', score=session.get('score', 0))
+
+
+@app.route('/check-level2-round2', methods=['POST'])
+def check_level2_round2():
+    patch = request.form.get('patch', '')
+
+    if '?' in patch or 'parameter' in patch.lower() or 'prepared' in patch.lower():
+        session['level2_r2'] = True
+        session['score'] = session.get('score', 0) + 200
+        return redirect('/level2/boss')
+
+    return render_template(
+        'level2_round2.html',
+        score=session.get('score', 0),
+        error='Still vulnerable! Use parameterized queries (?).',
+    )
+
+
+@app.route('/level2/boss')
+def level2_boss():
+    if not session.get('level2_r2'):
+        return redirect('/level2/round1')
+    return render_template('level2_boss.html', score=session.get('score', 0))
 
 if __name__ == '__main__':
     app.run(debug=True)

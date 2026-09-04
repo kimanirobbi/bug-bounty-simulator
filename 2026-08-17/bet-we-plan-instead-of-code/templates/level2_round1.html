@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="lair-shell">
+  <section class="lair-card" aria-labelledby="round-title">
+    <header><a href="/level2"><span>🐍</span> SQLI SNAKE</a><p>SCORE <b>{{ score }}</b></p></header>
+    <div class="lair-content">
+      <p class="eyebrow">ROUND 01 · FIND THE PAYLOAD</p>
+      <h1 id="round-title">Find its way<br><span>inside.</span></h1>
+      <p class="intro">The snake is trying to log in as admin without the password. Which input changes the meaning of the query?</p>
+      <div class="query"><span>CURRENT SQL</span><code>SELECT * FROM users<br>WHERE user = '<b>[ YOUR INPUT ]</b>'</code></div>
+      {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+      <form action="/check-level2-round1" method="POST">
+        <fieldset>
+          <legend>Choose an input</legend>
+          <label class="query-option"><input type="radio" name="query" value="admin" required><span class="radio-ui"></span><code>admin</code></label>
+          <label class="query-option"><input type="radio" name="query" value="' OR '1'='1"><span class="radio-ui"></span><code>' OR '1'='1</code></label>
+          <label class="query-option"><input type="radio" name="query" value="password123"><span class="radio-ui"></span><code>password123</code></label>
+          <label class="query-option"><input type="radio" name="query" value="admin' --"><span class="radio-ui"></span><code>admin' --</code></label>
+        </fieldset>
+        <button type="submit">Inject <span>💉</span></button>
+      </form>
+      <p class="hint">Tip: Look for a condition that is always true.</p>
+    </div>
+  </section>
+</main>
+<style>
+:root{--ink:#f4f1e8;--muted:#a7aca5;--line:rgba(244,241,232,.13);--red:#ff5b5b;--amber:#ffb24a}*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);background:#10090a radial-gradient(circle at 78% 10%,#482018 0,transparent 30rem);font-family:'Space Grotesk',sans-serif}.lair-shell{display:grid;place-items:center;min-height:100vh;padding:24px}.lair-card{width:min(100%,640px);overflow:hidden;border:1px solid rgba(255,91,91,.28);border-radius:27px;background:linear-gradient(135deg,#251312,#100c0c);box-shadow:0 26px 90px rgba(0,0,0,.45)}.lair-card header{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--line)}.lair-card header a{color:var(--ink);text-decoration:none;font-size:.76rem;letter-spacing:.11em;font-weight:700}.lair-card header a span{margin-right:6px}.lair-card header p{margin:0;color:var(--muted);font:500 .7rem 'DM Mono',monospace}.lair-card header b{margin-left:6px;color:var(--amber)}.lair-content{padding:42px 48px 45px}.eyebrow{margin:0 0 10px;color:var(--red);font:500 .7rem 'DM Mono',monospace;letter-spacing:.13em}h1{margin:0;font-size:clamp(2.4rem,7vw,3.7rem);line-height:.93;letter-spacing:-.06em}h1 span{color:var(--red)}.intro{margin:20px 0;color:var(--muted);line-height:1.5}.query{margin:22px 0;padding:15px;border:1px solid var(--line);border-radius:10px;background:#0c0909}.query span{display:block;margin-bottom:8px;color:var(--muted);font:500 .61rem 'DM Mono',monospace;letter-spacing:.1em}.query code{color:#e7dfda;font:400 .78rem 'DM Mono',monospace;line-height:1.6}.query code b{color:#ff998d;font-weight:500}.error{margin:0 0 15px;padding:11px;border:1px solid rgba(255,91,91,.3);border-radius:8px;background:rgba(255,91,91,.09);color:#ffafa7;font-size:.76rem;line-height:1.4}fieldset{margin:0;padding:0;border:0}legend{margin-bottom:10px;color:var(--muted);font-size:.76rem}.query-option{display:flex;align-items:center;gap:13px;margin:9px 0;padding:14px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);cursor:pointer;transition:.15s ease}.query-option:hover{border-color:var(--red);background:rgba(255,91,91,.06)}.query-option input{position:absolute;opacity:0}.radio-ui{width:16px;height:16px;border:1px solid #91827c;border-radius:50%}.query-option input:checked+.radio-ui{border:5px solid var(--red);box-shadow:0 0 0 2px rgba(255,91,91,.2)}.query-option code{font:500 .9rem 'DM Mono',monospace}button{width:100%;margin-top:19px;padding:14px;border:0;border-radius:9px;background:var(--red);color:#210b0b;cursor:pointer;font:700 .86rem 'Space Grotesk',sans-serif}button span{margin-left:5px}.hint{margin:15px 0 0;color:#82746f;font-size:.7rem;text-align:center}@media(max-width:520px){.lair-shell{padding:12px}.lair-content{padding:34px 24px}.lair-card header{padding:18px}}
+</style>
+{% endblock %}
